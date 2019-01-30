@@ -5,4 +5,5 @@ export interface User {
   imgUrl: String;
   posts: Post[];
   password: String;
+  sessionId: number;
 }

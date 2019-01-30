@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { User } from './user';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,10 @@ export class AuthService {
   currentUid: string;
 
   constructor(
-              private router: Router) {
+              private router: Router, private _cookieService: CookieService) {
 
       // Define the user observable
-      this.user = localStorage.getItem('currentUser').pipe(
+  /*     this.user = localStorage.getItem('currentUser').pipe(
         switchMap((user) => {
           if (user) {
             // set var to current logged in user
@@ -29,9 +30,18 @@ export class AuthService {
           }
         })
       );
-        this.getUserId();
+        this.getUserId(); */
   }
 
+  setCookie() {
+    this._cookieService.put('currentUser', '1234567');
+  }
+
+  getCookie(key: string){
+    console.log(this._cookieService.get('currentUser'));
+
+    return this._cookieService.get('currentUser');
+  }
 
   signIn(email: string, password: string) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password).then(success => {

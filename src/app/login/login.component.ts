@@ -18,8 +18,6 @@ import {
 } from '../auth.service';
 import { Observable } from 'rxjs';
 
-import { AppComponent } from '../app.component';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,7 +28,10 @@ export class LoginComponent implements OnInit {
   formBuilder = new FormBuilder;
   lockedIn = false;
   signupForm: FormGroup;
-  constructor() { }
+  constructor(private _authservice: AuthService) {
+    _authservice.setCookie();
+    _authservice.getCookie('currentUser');
+  }
 
 
   ngOnInit() {
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     // this.lockedIn = true;
-    return this.authService.signIn(this.email.value, this.password.value);
+
   }
 
 }

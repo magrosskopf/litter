@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import { JokecardComponent } from './jokecard/jokecard.component';
 import { LoginComponent } from './login/login.component';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 
 
@@ -36,7 +37,7 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatInputModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
