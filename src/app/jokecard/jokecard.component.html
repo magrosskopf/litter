@@ -1,0 +1,25 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ post.user }}</mat-card-title>
+    <mat-card-subtitle>{{ post.timestamp }}</mat-card-subtitle>
+    <i class="material-icons" (click)="toggleUpdateMode()">assignment</i>
+    <i class="material-icons" (click)="delete(post)">backspace</i>
+
+  </mat-card-header>
+  <mat-card-content>
+      <form class="example-form" [formGroup]="rForm" (ngSubmit)="updatePostContent(rForm.value, post)" *ngIf="updateMode">
+          <mat-form-field class="example-full-width">
+            <textarea matInput formControlName="description" placeholder="Insert Some Jokes Here"></textarea>
+          </mat-form-field>
+          <input type="submit" class="button expanded" value="Update">
+        </form>
+    <p *ngIf="!updateMode">
+      {{ post.content }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="lit(post)">LIT {{ post.lits }}</button>
+    <button mat-button (click)="shit(post)">SHIT {{ post.shits }} </button>
+  </mat-card-actions>
+</mat-card>

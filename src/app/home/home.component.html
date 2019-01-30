@@ -1,11 +1,16 @@
 <section class="wrapper">
   <section class="main">
     <section class="createPost-container">
-        <label>
-          Verfasse einen Post:
-          <input type="text" [formControl]="postInput">
-        </label>
+          <form class="example-form" [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
+            <mat-form-field class="example-full-width">
+              <textarea matInput formControlName="description" placeholder="Insert Some Jokes Here"></textarea>
+            </mat-form-field>
+            <input type="submit" class="button expanded" value="Post">
+          </form>
+
     </section>
+    <section class="post-container" >
+      <app-jokecard *ngFor="let post of loadedPosts" [post]="post" (deletedPost)="deletePost(post)" (updateContent)="updatePost(post)" (modifyLit)="lit(post)" (modifyShit)="shit(post)"></app-jokecard>
   </section>
   <section class="aside">
 
