@@ -3,15 +3,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
+import {
+  AuthGuardService as AuthGuard
+} from '../auth-guard.service';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'user',      component: UserComponent },
-  { path: 'login', component: LoginComponent},
   { path: '',
-    redirectTo: '/login',
+    redirectTo: 'login',
     pathMatch: 'full'
-  }
+  },
+  { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
+  { path: 'home', component: HomeComponent,
+  canActivate: [AuthGuard]  },
+  { path: 'user',      component: UserComponent,
+  canActivate: [AuthGuard]  },
+
+
 ];
 
 @NgModule({

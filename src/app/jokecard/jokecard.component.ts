@@ -20,13 +20,36 @@ export class JokecardComponent implements OnInit {
   @Output() modifyShit = new EventEmitter<Post>();
   @Output() updateContent = new EventEmitter<Post>();
 
+  currentUser = {
+    _id: null,
+        name: null,
+        email: null,
+        password: null
+  };
+
+  display = false;
+  currentUserInitial: String;
+
+
   constructor(private fb: FormBuilder, private _httpService: HttpService) {
     this.rForm = fb.group({
       'description' : [null, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(200)])],
     });
-   }
+
+  }
 
   ngOnInit() {
+    this._httpService.getCertainUser(this.post.user).subscribe((data) => {
+      this.currentUser = {
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+        password: data.password
+      };
+      this.display = localStorage.getItem('userId') === this.post.user;
+      this.currentUserInitial = this.currentUser.name.substring(0, 1);
+
+    });
   }
 
   updatePostContent(formData, post: Post) {
@@ -40,27 +63,25 @@ export class JokecardComponent implements OnInit {
   }
 
   lit(post: Post) {
-    if (post.canDoALit === true) {
-      post.lits = ++post.lits;
-      post.canDoALit = !post.canDoALit;
-      this.modifyLit.emit(post);
-    } else {
-      post.lits = --post.lits;
-      post.canDoALit = !post.canDoALit;
-      this.modifyLit.emit(post);
-    }
+      if (!post.lits.includes(localStorage.getItem('userId'))) {
+        post.lits.push(localStorage.getItem('userId'));
+        this.modifyLit.emit(post);
+      } else {
+        const index = post.lits.indexOf(localStorage.getItem('userId'));
+        post.lits.splice(index, 1);
+        this.modifyLit.emit(post);
+      }
+
   }
 
   shit(post: Post) {
-    if (post.canDoAShit === true) {
-      post.shits = ++post.shits;
-      post.canDoAShit = !post.canDoAShit;
-      this.modifyLit.emit(post);
+    if (!post.shits.includes(localStorage.getItem('userId'))) {
+      post.shits.push(localStorage.getItem('userId'));
+      this.modifyShit.emit(post);
     } else {
-      post.shits = --post.shits;
-      post.canDoAShit = !post.canDoAShit;
-      this.modifyLit.emit(post);
-
+      const index = post.shits.indexOf(localStorage.getItem('userId'));
+      post.shits.splice(index, 1);
+      this.modifyShit.emit(post);
     }
   }
 

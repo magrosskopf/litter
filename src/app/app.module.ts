@@ -15,8 +15,14 @@ import {MatInputModule} from '@angular/material/input';
 import { JokecardComponent } from './jokecard/jokecard.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthService } from './auth.service';
+import { RegisterComponent } from './register/register.component';
 
-
+export function tokenGetter() {
+  const cookie = new CookieService();
+  return cookie.get('token');
+}
 
 @NgModule({
   declarations: [
@@ -24,7 +30,8 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     HomeComponent,
     UserComponent,
     JokecardComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +42,11 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    }),
     MatInputModule
   ],
   providers: [HttpService, CookieService],

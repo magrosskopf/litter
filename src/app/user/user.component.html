@@ -1,6 +1,16 @@
 <section class="wrapper">
   <section class="main">
+      <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="initial"> {{ currentUserInitial }} </div>
+            <mat-card-title>{{ currentUser.name }}</mat-card-title>
+            <mat-card-subtitle>{{ currentUser.email }}</mat-card-subtitle>
 
+          </mat-card-header>
+          <mat-card-content>
+            <app-jokecard *ngFor="let post of usersPosts" [post]="post" (deletedPost)="deletePost(post)" (updateContent)="updatePost(post)" (modifyLit)="lit(post)" (modifyShit)="shit(post)"></app-jokecard>
+          </mat-card-content>
+        </mat-card>
   </section>
   <section class="aside">
 

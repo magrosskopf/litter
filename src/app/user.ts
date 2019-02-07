@@ -2,8 +2,6 @@ import { Post } from './post';
 export interface User {
   _id: number;
   name: String;
-  imgUrl: String;
-  posts: Post[];
+  email: String;
   password: String;
-  sessionId: number;
 }

@@ -17,6 +17,7 @@ import {
   AuthService
 } from '../auth.service';
 import { Observable } from 'rxjs';
+import { HttpService } from '../../http.service';
 
 @Component({
   selector: 'app-login',
@@ -25,23 +26,22 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   registerForm: any;
-  formBuilder = new FormBuilder;
+  fb = new FormBuilder;
   lockedIn = false;
   signupForm: FormGroup;
-  constructor(private _authservice: AuthService) {
-    _authservice.setCookie();
-    _authservice.getCookie('currentUser');
+  constructor(private _authservice: AuthService, private _http: HttpService, private router: Router) {
+
   }
 
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      'email': ['info@wit.de', [
+      'email': ['maiusx@asdasfx.de', [
         Validators.required,
         Validators.email
         ]
       ],
-      'password': ['1234567', [
+      'password': ['123456', [
 
         Validators.minLength(6),
         Validators.maxLength(25),
@@ -57,6 +57,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     // this.lockedIn = true;
+    // this._http.sendEmailandPassword('maiusx@asdasfx.de', '123456');
+console.log(this.email.value);
+
+    this._http.sendEmailandPassword(this.email.value, this.password.value);
+
+
+
 
   }
 

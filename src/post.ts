@@ -2,9 +2,9 @@ export interface Post {
   _id: String;
   user: String;
   content: String;
-  lits: number;
+  lits: String[];
   canDoALit: boolean;
-  shits: number;
+  shits: String[];
   canDoAShit: boolean;
   comments: Comment;
   timestamp: String;

@@ -4,11 +4,14 @@
       Litter
     </h1>
     <ul>
-      <a routerLink="/" routerLinkActive="active">
+      <a routerLink="/home" routerLinkActive="active">
         <li>Home</li>
       </a>
       <a routerLink="/user" routerLinkActive="active">
         <li>User</li>
+      </a>
+      <a routerLink="/login" routerLinkActive="active">
+        <li (click)="logout()" >Logout</li>
       </a>
     </ul>
   </section>

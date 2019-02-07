@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
@@ -12,7 +12,6 @@ import {MatButtonModule} from '@angular/material/button';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
   rForm: FormGroup;
@@ -21,24 +20,28 @@ export class HomeComponent implements OnInit {
   name = '';
   loadedPosts: Post[] = [];
   updateMode = false;
+  date: any;
+  token: String;
 
   constructor(private fb: FormBuilder, private _httpService: HttpService) {
+
     this.rForm = fb.group({
       'description' : [null, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(200)])],
     });
+
+
    }
 
   ngOnInit() {
-    this.loadedPosts = [];
-    this._httpService.getAllPosts().subscribe(data => {
-      data.forEach(element => {
-        this.loadedPosts.push(element);
-        console.log(this.loadedPosts);
+    const token = localStorage.getItem('token');
+    setTimeout(() => {
+      console.log(localStorage.getItem('token'));
+
+      this._httpService.getAllPosts(token).subscribe(data => {
+        this.loadedPosts = data.slice().reverse();
       });
-      this.loadedPosts = this.loadedPosts.slice().reverse();
-    });
 
-
+    }, 2000);
   }
 
   getData() {
@@ -46,14 +49,15 @@ export class HomeComponent implements OnInit {
   }
 
   addPost(post) {
+
     this.description = post.description;
      const newPost: Post = {
       _id: '',
-      user: 'Maius_XX',
+      user: localStorage.getItem('userId'),
       content: this.description,
-      lits: 13,
+      lits: [],
       canDoALit: true,
-      shits: 2,
+      shits: [],
       canDoAShit: true,
       comments: new Comment(),
       timestamp: '' + new Date()
@@ -82,20 +86,10 @@ export class HomeComponent implements OnInit {
 
   lit(post: Post) {
     this._httpService.updatePost(post);
-    for (let index = 0; index < this.loadedPosts.length; index++) {
-     if (this.loadedPosts[index]._id === post._id) {
-       this.loadedPosts[index].lits = post.lits;
-     }
-   }
   }
 
   shit(post: Post) {
     this._httpService.updatePost(post);
-    for (let index = 0; index < this.loadedPosts.length; index++) {
-     if (this.loadedPosts[index]._id === post._id) {
-       this.loadedPosts[index].shits = post.shits;
-     }
-   }
   }
 
 
