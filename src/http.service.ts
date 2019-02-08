@@ -128,7 +128,7 @@ export class HttpService {
         'Content-Type': 'application/json ; charset=UTF-8'
       })
     };
-    this._http.post<any>(this.urlUsers + 'signup', {email: name, password: password, name: name}, httpOptions ).subscribe( data => {
+    this._http.post<any>(this.urlUsers + 'signup', {email: email, password: password, name: name}, httpOptions ).subscribe( data => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
       console.log(data.userId);

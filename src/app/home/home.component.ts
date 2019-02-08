@@ -61,12 +61,13 @@ export class HomeComponent implements OnInit {
       timestamp: '' + new Date()
     };
     this._httpService.createNewPosts(newPost);
-    const tempPost = this.loadedPosts;
     this.loadedPosts = [];
-    this.loadedPosts.push(newPost);
-    tempPost.forEach(element => {
-      this.loadedPosts.push(element);
-    });
+    setTimeout(() => {
+      this._httpService.getAllPosts(localStorage.getItem('token')).subscribe(data => {
+        this.loadedPosts = data.slice().reverse();
+      });
+
+    }, 500);
   }
 
   deletePost(post: Post) {
