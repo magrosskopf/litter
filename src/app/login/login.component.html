@@ -1,18 +1,12 @@
 <div class="wrapper-login">
-  <div class="lock-icon" [class.unlocked]="lockedIn">
-
-  </div>
   <div class="heading-login">
     <span>LITTER</span><br>
     <span>LOGIN</span>
   </div>
   <div class="form-container">
     <form [formGroup]="signupForm"  (ngSubmit)="login()">
-
-      <h3>New User Signup</h3>
-
       <label for="email">Email</label>
-      <input type="email" formControlName="email" value="info@wit.de">
+      <input type="email" formControlName="email">
 
 
       <div *ngIf="email.invalid && email.dirty">
@@ -28,10 +22,10 @@
 
       <div *ngIf="signupForm.valid" >Form looks good! Let's do this.</div>
 
-      <button type="submit" [disabled]="!signupForm.valid" routerLink="/home" routerLinkActive="active">Submit</button>
+      <button type="submit" [disabled]="!signupForm.valid" routerLink="/home" routerLinkActive="active">LOGIN</button>
 
 
     </form>
-    <a routerLink="/register" routerLinkActive="active">JETZT REGISTRIEREN!</a>
   </div>
+  <a routerLink="/register" routerLinkActive="active">JETZT REGISTRIEREN!</a>
 </div>

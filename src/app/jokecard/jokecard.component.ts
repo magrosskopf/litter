@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../../post';
 import { HttpService } from '../../http.service';
+import { Comment } from '../comment';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { HttpService } from '../../http.service';
 export class JokecardComponent implements OnInit {
   updateMode = false;
   rForm: FormGroup;
+  exampleForm: FormGroup;
   // post: any;                     // A property for our submitted form
   description = '';
   @Input() post: Post;
@@ -35,6 +37,9 @@ export class JokecardComponent implements OnInit {
     this.rForm = fb.group({
       'description' : [null, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(200)])],
     });
+    this.exampleForm = fb.group({
+      'comment' : [null, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(200)])],
+    });
 
   }
 
@@ -54,6 +59,16 @@ export class JokecardComponent implements OnInit {
 
   updatePostContent(formData, post: Post) {
     post.content = formData.description;
+    this.updateContent.emit(post);
+  }
+
+  addComment(formData, post: Post) {
+    let comment: Comment = {
+      user: this.currentUser,
+      content: formData.comment,
+      timestamp: '' + new Date()
+    };
+    post.comments.push(comment);
     this.updateContent.emit(post);
   }
 

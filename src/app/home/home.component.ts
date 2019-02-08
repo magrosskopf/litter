@@ -35,13 +35,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const token = localStorage.getItem('token');
     setTimeout(() => {
-      console.log(localStorage.getItem('token'));
-
       this._httpService.getAllPosts(token).subscribe(data => {
         this.loadedPosts = data.slice().reverse();
       });
 
-    }, 2000);
+    }, 500);
   }
 
   getData() {
@@ -59,7 +57,7 @@ export class HomeComponent implements OnInit {
       canDoALit: true,
       shits: [],
       canDoAShit: true,
-      comments: new Comment(),
+      comments: [],
       timestamp: '' + new Date()
     };
     this._httpService.createNewPosts(newPost);

@@ -3,7 +3,7 @@
     <section class="createPost-container">
           <form class="example-form" [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
             <mat-form-field class="example-full-width">
-              <textarea matInput formControlName="description" placeholder="Insert Some Jokes Here"></textarea>
+              <textarea matInput (keyup.enter)="addPost(rForm.value)" formControlName="description" placeholder="Post Something Interesting!"></textarea>
             </mat-form-field>
             <input type="submit" class="button expanded" value="Post">
           </form>

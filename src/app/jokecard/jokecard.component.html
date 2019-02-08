@@ -22,4 +22,16 @@
     <button mat-button (click)="lit(post)">🔥 {{ post.lits.length }}</button>
     <button mat-button (click)="shit(post)">💩 {{ post.shits.length }} </button>
   </mat-card-actions>
+  <form class="example-form" [formGroup]="exampleForm" (ngSubmit)="addComment(exampleForm.value, post)" >
+    <mat-form-field class="example-full-width">
+      <textarea matInput formControlName="comment" placeholder="Leave a Comment"></textarea>
+    </mat-form-field>
+    <input type="submit" class="button expanded" value="ADD A COMMENT">
+  </form>
+  <section *ngFor="let comments of post.comments" class="comments">
+    <span>{{ comments.user.name}}</span> <br>
+    <span class="timestamp"> {{ comments.timestamp }} </span>
+    <p> {{ comments.content }} </p>
+
+  </section>
 </mat-card>

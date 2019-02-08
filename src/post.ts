@@ -1,3 +1,5 @@
+import { Comment } from './app/comment';
+
 export interface Post {
   _id: String;
   user: String;
@@ -6,6 +8,6 @@ export interface Post {
   canDoALit: boolean;
   shits: String[];
   canDoAShit: boolean;
-  comments: Comment;
+  comments: Comment[];
   timestamp: String;
 }
