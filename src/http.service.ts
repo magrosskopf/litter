@@ -105,8 +105,6 @@ export class HttpService {
     console.log('test');
 
     this._http.post<any>(this.urlUsers + 'login', {email: name, password: password}, httpOptions ).subscribe( data => {
-      // this._cookieService.put('token', data.token, {domain: 'localhost', expires: '10h'});
-      // this._cookieService.put('userId', data.userId, {domain: 'localhost', expires: '10h'});
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
       this._authservice.isAuthenticated();
